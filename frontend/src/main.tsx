@@ -1,8 +1,8 @@
 import { ClerkProvider } from "@clerk/clerk-react";
+import { PrimeReactProvider } from "primereact/api";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-// import App from "./App.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import Finances from "./screens/finances/finances.tsx";
 
@@ -19,7 +19,9 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-      <RouterProvider router={router} />
+      <PrimeReactProvider>
+        <RouterProvider router={router} />
+      </PrimeReactProvider>
     </ClerkProvider>
   </StrictMode>
 );
