@@ -13,11 +13,13 @@ import { TabMenu } from "primereact/tabmenu";
 import { useEffect, useState } from "react";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { FiTrendingUp } from "react-icons/fi";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Header = () => {
     const router = useRouter();
     const [activeIndex, setActiveIndex] = useState(0);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Track window width
+
 
     // Check if window object is available on the client-side
     useEffect(() => {
@@ -67,18 +69,33 @@ const Header = () => {
     return (
         windowWidth <= 595 ?
             (
-                <Sheet>
-                    <SheetTrigger>Open</SheetTrigger>
-                    <SheetContent>
-                        <SheetHeader>
-                            <SheetTitle>Are you absolutely sure?</SheetTitle>
-                            <SheetDescription>
-                                This action cannot be undone. This will permanently delete your account
-                                and remove your data from our servers.
-                            </SheetDescription>
-                        </SheetHeader>
-                    </SheetContent>
-                </Sheet>
+                <div className='w-full flex justify-center  h-14'>
+                    <div className="w-[95%] flex flex-row">
+                        <div style={{ color: "#007ad9" }} className="flex justify-center items-center text-2xl w-1/6 border border-white border-b-gray-300">
+                            <Sheet>
+                                <SheetTrigger><GiHamburgerMenu /></SheetTrigger>
+                                <SheetContent>
+                                    <SheetHeader>
+                                        <SheetTitle>Are you absolutely sure?</SheetTitle>
+                                        <SheetDescription>
+                                            This action cannot be undone. This will permanently delete your account
+                                            and remove your data from our servers.
+                                        </SheetDescription>
+                                    </SheetHeader>
+                                </SheetContent>
+                            </Sheet>
+                        </div>
+                        <div className="flex justify-end items-center pr-4 w-5/6 border border-white border-b-gray-300 text-2xl">
+                            <span style={{ color: "#01830A" }} className="font-semibold">
+                                $pend
+                            </span>{" "}
+                            <span style={{ color: "#01830A" }} className="font-semibold">
+                                $
+                            </span>
+                            ense
+                        </div>
+                    </div>
+                </div>
             ) :
             (
                 <div className='w-full flex justify-center'>
