@@ -1,4 +1,6 @@
-import Header from "@/screens/Header/Header";
+import {
+  ClerkProvider
+} from '@clerk/nextjs';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PrimeReactProvider } from 'primereact/api';
@@ -25,15 +27,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <PrimeReactProvider>
-          <Header />
-          {children}
-        </PrimeReactProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <PrimeReactProvider>
+            {children}
+          </PrimeReactProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
