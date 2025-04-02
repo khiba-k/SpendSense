@@ -7,6 +7,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
+import { UserButton, useUser } from "@clerk/nextjs";
 import { useRouter } from 'next/navigation';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { TabMenu } from "primereact/tabmenu";
@@ -17,6 +18,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 const Header = () => {
     const router = useRouter();
+    const { isSignedIn, user } = useUser();
     const [activeIndex, setActiveIndex] = useState(0);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Track window width
 
@@ -49,7 +51,7 @@ const Header = () => {
             label: "Overview",
             icon: <FiTrendingUp className="mr-2 sm:text-sm" />,
             command: () => {
-                router.push("/");
+                router.push("/overview");
                 setActiveIndex(0);
             },
             className: `${activeIndex === 0 ? "text-blue-500 font-bold" : "text-gray-500"} text-base sm:text-sm`,
@@ -111,13 +113,18 @@ const Header = () => {
                             ense
                         </div>
                         {/* Navigation Div */}
-                        <div className="w-[50%] md:w-[75%] lg:w-[80%] pt-6 mb-0 pb-1">
-                            <TabMenu
-                                model={items}
-                                activeIndex={activeIndex}
-                                onTabChange={(e) => setActiveIndex(e.index)}
-                                className="border-none [&_.p-tabmenu-nav]:text-base [&_.p-tabmenu-nav]:sm:text-sm"
-                            />
+                        <div className="w-[50%] md:w-[75%] lg:w-[80%] pt-6 mb-0 pb-1 flex flex-row">
+                            <div className="w-[85%]">
+                                <TabMenu
+                                    model={items}
+                                    activeIndex={activeIndex}
+                                    onTabChange={(e) => setActiveIndex(e.index)}
+                                    className="border-none [&_.p-tabmenu-nav]:text-base [&_.p-tabmenu-nav]:sm:text-sm"
+                                />
+                            </div>
+                            <div className="w-[15%] border border-white border-b-gray-300 flex flex-col items-center justify-center " style={{ color: "#007ad9" }} >
+                                <div style={{}} className=""><UserButton /></div>
+                            </div>
                         </div>
                     </div>
                 </div>

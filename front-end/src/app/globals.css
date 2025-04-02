@@ -118,3 +118,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.signInBg {
+  background-image: url("https://plus.unsplash.com/premium_photo-1680397095052-39959b44a604?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZpbmFuY2VzfGVufDB8MnwwfHx8MA%3D%3D");
+  /* background-size: cover; Cover the whole div */
+  background-position: right; /* Center the image */
+  background-repeat: repeat; /* Do not repeat */
+  height: 100vh; /* Full height */
+}
