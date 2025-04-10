@@ -1,6 +1,4 @@
-import Header from "@/screens/Header/Header";
 import { ClerkProvider } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PrimeReactProvider } from 'primereact/api';
@@ -27,8 +25,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const { userId } = await auth();
-
   return (
     <ClerkProvider>
       <html lang="en">
@@ -36,7 +32,7 @@ export default async function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <PrimeReactProvider>
-            {userId ? <Header /> : ""}
+
             {children}
           </PrimeReactProvider>
         </body>
