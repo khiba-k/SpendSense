@@ -8,7 +8,11 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   const { userId, sessionClaims, redirectToSignIn } = await auth();
 
   // For users visiting /onboarding, don't try to redirect
-  if (userId && isOnboardingRoute(req)) {
+  if (
+    userId &&
+    isOnboardingRoute(req) &&
+    !sessionClaims?.metadata?.onboardingComplete
+  ) {
     return NextResponse.next();
   }
 
@@ -25,6 +29,16 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
 
   // If the user is logged in and the route is protected, let them view.
   if (userId && !isPublicRoute(req)) return NextResponse.next();
+
+  // If user is onboarded and they are on the onboarding route, redirect them to the dashboard
+  if (
+    userId &&
+    isOnboardingRoute(req) &&
+    sessionClaims?.metadata?.onboardingComplete
+  ) {
+    const dashboardUrl = new URL("/overview", req.url);
+    return NextResponse.redirect(dashboardUrl);
+  }
 });
 
 export const config = {

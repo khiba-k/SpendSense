@@ -13,17 +13,17 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useUser } from '@clerk/nextjs'
 import { zodResolver } from "@hookform/resolvers/zod"
+import { LoaderIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import * as React from 'react'
 import { useEffect } from 'react'
 import { useForm } from "react-hook-form"
+import { Onboardingcomplete } from './utils/OnboardingComplete'
 import { OnboardingForm, OnboardingFormSchema } from './utils/OnboardingFormSchema'
-// import { completeOnboarding } from './_actions'
 
 export default function Onboarding() {
   const [error, setError] = React.useState('')
   const { user } = useUser()
-  console.log(user?.lastName)
   const router = useRouter()
 
 
@@ -53,8 +53,8 @@ export default function Onboarding() {
   }, [user, form]);
 
   //Data submit handler.
-  function onSubmit(data: OnboardingForm) {
-    console.log(data);
+  async function onSubmit(data: OnboardingForm) {
+    const completeOnboarding = await Onboardingcomplete(data);
   }
 
   // Form fields
@@ -72,7 +72,8 @@ export default function Onboarding() {
 
   return (
     <div className='flex items-center justify-center h-screen'>
-      <Card className='w-lg px-3'>
+      <Card className='w-lg px-3 sm:h-full md:h-[630px] py-5'>
+        <h1 style={{ color: "#01830A" }} className='text-2xl font-bold text-center mb-4'>$pend $ense</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* Name, Surname, Email, Occupation */}
@@ -119,7 +120,9 @@ export default function Onboarding() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <div className='flex w-full justify-end'>{form.formState.isSubmitting ?
+              <Button disabled={true} type="submit" className='w-4'><LoaderIcon /></Button> :
+              <Button type="submit">Submit</Button>}</div>
           </form>
         </Form>
       </Card>

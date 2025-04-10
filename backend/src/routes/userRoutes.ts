@@ -38,7 +38,7 @@ usersRouter.post("/create", async (req: Request, res: Response) => {
       } else {
         res
           .status(400)
-          .json({ sucess: false, message: "Failed to creat user" });
+          .json({ sucess: false, message: "Failed to create user" });
       }
     } else {
       // Log validation error if data not valid
