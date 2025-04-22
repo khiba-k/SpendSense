@@ -12,12 +12,14 @@ usersRouter.get("/all", (req: Request, res, Response) => {
 // Route for creating new user
 usersRouter.post("/create", async (req: Request, res: Response) => {
   try {
-    const { name, lastName, email, userId } = req.body;
+    const { name, lastName, email, userId, occupation, gender } = req.body;
 
     const userObj = {
       name: name,
       lastName: lastName,
       email: email,
+      occupation: occupation,
+      gender: gender,
       dateCreated: Date.now(),
       dateModified: Date.now(),
       userId: userId,

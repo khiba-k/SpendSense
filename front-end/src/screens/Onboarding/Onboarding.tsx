@@ -14,32 +14,24 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useUser } from '@clerk/nextjs'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import * as React from 'react'
 import { useEffect } from 'react'
 import { useForm } from "react-hook-form"
 import { Onboardingcomplete } from './utils/OnboardingComplete'
 import { OnboardingForm, OnboardingFormSchema } from './utils/OnboardingFormSchema'
 
 export default function Onboarding() {
-  const [error, setError] = React.useState('')
   const { user } = useUser()
-  const router = useRouter()
 
 
   // Define form
   const form = useForm<OnboardingForm>({
     resolver: zodResolver(OnboardingFormSchema),
     defaultValues: {
-      name: user?.firstName || "",
-      surname: user?.lastName || "",
-      email: "",
-      occupation: "",
       gender: "Male",
     },
   });
 
-  // Reset form values when user is available
+  // Reset form values when user data is available
   useEffect(() => {
     if (user) {
       form.reset({
@@ -47,7 +39,6 @@ export default function Onboarding() {
         surname: user.lastName || "",
         email: user.emailAddresses[0]?.emailAddress || "",
         occupation: "",
-        gender: "Male",
       });
     }
   }, [user, form]);
