@@ -10,8 +10,10 @@ usersRouter.get("/all", (req: Request, res, Response) => {
 });
 
 // Route for creating new user
-usersRouter.post("/create", async (req: Request, res: Response) => {
+usersRouter.post("/createUser", async (req: Request, res: Response) => {
   try {
+    console.log("BODY: ", req.body);
+
     const { name, lastName, email, userId, occupation, gender } = req.body;
 
     const userObj = {
@@ -35,11 +37,11 @@ usersRouter.post("/create", async (req: Request, res: Response) => {
 
       if (user) {
         res
-          .status(200)
+          .status(201)
           .json({ sucess: true, message: "User created successfully" });
       } else {
         res
-          .status(400)
+          .status(500)
           .json({ sucess: false, message: "Failed to create user" });
       }
     } else {
@@ -50,7 +52,7 @@ usersRouter.post("/create", async (req: Request, res: Response) => {
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message);
+      console.error("Error: ", error.message);
       res.status(500).send("A server side errror occured");
     } else {
       console.error("An unknown error occured: ", error);

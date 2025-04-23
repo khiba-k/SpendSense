@@ -45,7 +45,11 @@ export default function Onboarding() {
 
   //Data submit handler.
   async function onSubmit(data: OnboardingForm) {
-    const completeOnboarding = await Onboardingcomplete(data);
+    try {
+      const completeOnboarding = await Onboardingcomplete(data);
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+    }
   }
 
   // Form fields
