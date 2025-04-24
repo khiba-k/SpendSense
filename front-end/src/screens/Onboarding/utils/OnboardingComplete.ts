@@ -17,6 +17,9 @@ export const Onboardingcomplete = async (formData: OnboardingForm) => {
     console.log("Form Data: ", formData);
     const response = await fetch("http://localhost:5201/createUser", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json", // <-- Important!
+      },
       body: JSON.stringify(formData),
     });
 

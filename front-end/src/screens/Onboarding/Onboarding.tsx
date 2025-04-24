@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useUser } from '@clerk/nextjs'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from "react-hook-form"
 import { Onboardingcomplete } from './utils/OnboardingComplete'
@@ -21,6 +22,7 @@ import { OnboardingForm, OnboardingFormSchema } from './utils/OnboardingFormSche
 
 export default function Onboarding() {
   const { user } = useUser()
+  const router = useRouter()
 
 
   // Define form
@@ -36,7 +38,7 @@ export default function Onboarding() {
     if (user) {
       form.reset({
         name: user.firstName || "",
-        surname: user.lastName || "",
+        lastName: user.lastName || "",
         email: user.emailAddresses[0]?.emailAddress || "",
         occupation: "",
       });
@@ -46,7 +48,13 @@ export default function Onboarding() {
   //Data submit handler.
   async function onSubmit(data: OnboardingForm) {
     try {
-      const completeOnboarding = await Onboardingcomplete(data);
+      data["userId"] = user?.id;
+      const compledteOnboarding = await Onboardingcomplete(data);
+
+      if (compledteOnboarding?.message) {
+        router.push("/overview");
+      }
+
     } catch (error) {
       console.error("Error submitting form: ", error);
     }
@@ -54,13 +62,13 @@ export default function Onboarding() {
 
   // Form fields
   const fields: Array<{
-    name: "name" | "surname" | "email" | "occupation" | "gender";
+    name: "name" | "lastName" | "email" | "occupation" | "gender";
     label: string;
     placeholder: string;
     disabled?: boolean;
   }> = [
       { name: "name", label: "Name", placeholder: "Enter your name" },
-      { name: "surname", label: "Surname", placeholder: "Enter your surname" },
+      { name: "lastName", label: "Last Name", placeholder: "Enter your last name" },
       { name: "email", label: "Email", placeholder: "Enter your email", disabled: true },
       { name: "occupation", label: "Occupation", placeholder: "Enter your occupation e.g Accountant, HR Manager" },
     ];
